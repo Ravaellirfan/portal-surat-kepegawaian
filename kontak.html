@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kontak Kami - Portal Informasi Surat Kepegawaian</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet" />
+  <style>
+    body {
+      background: url('bgtk.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      color: white;
+      height: 100vh;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.35);
+      z-index: 0;
+    }
+
+    .content-container {
+      position: relative;
+      z-index: 1;
+      max-width: 900px;
+      margin: 4rem auto;
+      background: rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 1rem;
+      padding: 2rem;
+      color: white;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+    }
+
+    header, footer {
+      text-align: center;
+      margin-bottom: 2rem;
+    }
+
+    .logo {
+      height: 60px;
+    }
+
+    nav ul {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      margin: 1rem 0;
+      flex-wrap: wrap;
+    }
+
+    nav ul li a {
+      text-decoration: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      font-weight: 600;
+      background-color: rgba(255, 255, 255, 0.2);
+      color: white;
+      transition: all 0.3s ease;
+    }
+
+    nav ul li a:hover,
+    nav ul li a.active {
+      background-color: #2a5298;
+    }
+
+    h2 {
+      text-align: center;
+      color: #fff;
+      margin-bottom: 1.5rem;
+      border-bottom: 2px solid #fff;
+      padding-bottom: 0.5rem;
+    }
+
+    dl.contact-info dt {
+      font-weight: bold;
+      margin-top: 1rem;
+      color: #ffd700;
+    }
+
+    dl.contact-info dd,
+    a {
+      color: #f1f1f1;
+      margin-left: 0;
+    }
+
+    label {
+      font-weight: 600;
+      margin-top: 0.5rem;
+      color: white;
+    }
+
+    .form-control {
+      border-radius: 10px;
+      padding: 10px;
+      background-color: rgba(255, 255, 255, 0.3);
+      border: 1px solid #ccc;
+      color: #000;
+    }
+
+    .form-control::placeholder {
+      color: #333;
+    }
+
+    .submit-button {
+      background-color: #007bff;
+      color: white;
+      font-weight: bold;
+      border: none;
+      padding: 12px 25px;
+      border-radius: 30px;
+      width: 100%;
+      margin-top: 1rem;
+    }
+
+    .submit-button:hover {
+      background-color: #0056b3;
+    }
+
+    footer {
+      font-size: 0.9rem;
+      color: #ddd;
+      margin-top: 2rem;
+    }
+
+    footer a {
+      color: #f1f1f1;
+      text-decoration: none;
+      margin: 0 0.5rem;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="content-container">
+    <header>
+      <img src="logo.png" alt="Logo Instansi" class="logo mb-2" />
+      <h4>Portal Surat Kepegawaian<br>BGTK Provinsi Lampung</h4>
+      <nav>
+        <ul>
+          <li><a href="user.html">Beranda</a></li>
+          <li><a href="daftar.html">Daftar Surat</a></li>
+          <li><a href="pencarian.html">Pencarian</a></li>
+          <li><a href="kontak.html" class="active">Kontak</a></li>
+          <li><a href="profile.html">Profil</a></li>
+          <li><a href="logout.php">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+
+    <main>
+      <h2>Kontak Kami</h2>
+
+      <dl class="contact-info">
+        <dt>Unit Kepegawaian</dt>
+        <dd>Bagian Kepegawaian Administrasi dan Kemitraan</dd>
+
+        <dt>Alamat Kantor</dt>
+        <dd>Jalan Cut Meutia No. 23 Telukbetung Utara, Bandar Lampung 35214</dd>
+
+        <dt>Nomor Telepon</dt>
+        <dd>(0721) 485828-489861</dd>
+
+        <dt>Email</dt>
+        <dd><a href="mailto:balaigtklampung@gmail.com">balaigtklampung@gmail.com</a></dd>
+      </dl>
+
+      <form class="mt-4" id="contact-form" novalidate>
+        <div class="mb-3">
+          <label for="name" class="form-label">Nama Lengkap</label>
+          <input type="text" class="form-control" id="name" required placeholder="Nama Anda">
+        </div>
+        <div class="mb-3">
+          <label for="email" class="form-label">Alamat Email</label>
+          <input type="email" class="form-control" id="email" required placeholder="Email Anda">
+        </div>
+        <div class="mb-3">
+          <label for="message" class="form-label">Pesan</label>
+          <textarea class="form-control" id="message" rows="4" required placeholder="Tulis pesan Anda di sini..."></textarea>
+        </div>
+        <button type="submit" class="submit-button">Kirim Pesan</button>
+      </form>
+    </main>
+
+    <footer>
+      <p>© 2025 BGTK Provinsi Lampung | <a href="#">Kebijakan Privasi</a> | <a href="#">Bantuan</a></p>
+    </footer>
+  </div>
+
+  <script>
+    const contactForm = document.getElementById('contact-form');
+    contactForm.addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const nama = document.getElementById('name').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const pesan = document.getElementById('message').value.trim();
+      if (!nama || !email || !pesan) return;
+      const res = await fetch('pesan_create.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `nama=${encodeURIComponent(nama)}&email=${encodeURIComponent(email)}&pesan=${encodeURIComponent(pesan)}`
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('Pesan berhasil dikirim!');
+        contactForm.reset();
+      } else {
+        alert(data.message || 'Gagal mengirim pesan!');
+      }
+    });
+  </script>
+</body>
+</html>

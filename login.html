@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Login - Portal Kepegawaian</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('bgtk.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      height: 100vh;
+      margin: 0;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.35); /* transparansi hitam */
+      z-index: 0;
+    }
+
+    .card {
+      position: relative;
+      z-index: 1;
+      background: rgba(255, 255, 255, 0.2); /* lebih transparan */
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border-radius: 1rem;
+      padding: 2rem;
+      width: 100%;
+      max-width: 430px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.37);
+      color: white;
+      animation: fadeInUp 1s ease;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        transform: translateY(40px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .logo {
+      height: 60px;
+      object-fit: contain;
+    }
+
+    h4 {
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .form-label {
+      font-weight: 500;
+      color: #f1f1f1;
+    }
+
+    .form-control {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+      border-radius: 0.5rem;
+    }
+
+    .form-control:focus {
+      border-color: #2a5298;
+      box-shadow: 0 0 8px rgba(42, 82, 152, 0.4);
+    }
+
+    .input-group-text {
+      background-color: rgba(255, 255, 255, 0.8);
+      border: none;
+    }
+
+    .btn-primary {
+      background: #2a5298;
+      border: none;
+      font-weight: 600;
+      transition: 0.3s ease;
+    }
+
+    .btn-primary:hover {
+      background: #3b6cd1;
+      transform: scale(1.03);
+    }
+
+    .text-muted {
+      font-size: 0.85rem;
+      color: #f0f0f0 !important;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+
+  <div class="card">
+    <div class="text-center mb-4">
+      <img src="logo.png" alt="Logo Instansi" class="logo mb-2" />
+      <h4>Portal Surat Kepegawaian<br>BGTK Provinsi Lampung</h4>
+    </div>
+
+    <form method="POST" action="login.php" autocomplete="off" novalidate>
+      <div class="mb-3">
+        <label for="username" class="form-label">Username</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-person-fill"></i></span>
+          <input
+            type="text"
+            name="username"
+            id="username"
+            class="form-control"
+            placeholder="Masukkan username"
+            required
+            autofocus
+          />
+        </div>
+      </div>
+
+      <div class="mb-4">
+        <label for="password" class="form-label">Password</label>
+        <div class="input-group">
+          <span class="input-group-text"><i class="bi bi-lock-fill"></i></span>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="form-control"
+            placeholder="Masukkan password"
+            required
+          />
+        </div>
+      </div>
+
+      <button type="submit" class="btn btn-primary w-100">Login</button>
+    </form>
+    <div id="login-info" class="text-center mt-2 text-info"></div>
+    <div id="error-message" class="text-danger text-center mt-3"></div>
+    <p class="text-center text-muted mt-3">© 2025 BGTK Provinsi Lampung</p>
+  </div>
+  <script>
+    // Tampilkan pesan error jika ada query error
+    const params = new URLSearchParams(window.location.search);
+    if (params.get('error') === '1') {
+      document.getElementById('error-message').textContent = 'Username atau password salah!';
+    } else if (params.get('error') === '2') {
+      document.getElementById('error-message').textContent = 'Data tidak lengkap!';
+    }
+  </script>
+</body>
+</html>

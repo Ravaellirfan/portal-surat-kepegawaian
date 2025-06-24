@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Kelola Surat</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <style>
+    body {
+      background: url('bgtk.jpeg') no-repeat center center fixed;
+      background-size: cover;
+      font-family: 'Segoe UI', sans-serif;
+      min-height: 100vh;
+      margin: 0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      bottom: 0;
+      right: 0;
+      background: rgba(0, 0, 0, 0.3);
+      z-index: 0;
+    }
+
+    .container-glass {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 1000px;
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(15px);
+      border-radius: 20px;
+      padding: 40px;
+      color: #fff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
+      animation: fadeIn 1s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    h1 {
+      font-weight: 700;
+      margin-bottom: 30px;
+      text-align: center;
+    }
+
+    .btn-primary, .btn-danger {
+      border-radius: 10px;
+    }
+
+    .btn-secondary {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+      border: none;
+      transition: 0.3s;
+    }
+
+    .btn-secondary:hover {
+      background-color: rgba(255, 255, 255, 0.35);
+    }
+
+    .form-control {
+      border-radius: 10px;
+    }
+
+    table {
+      background-color: rgba(255, 255, 255, 0.2);
+      color: #fff;
+    }
+
+    table th, table td {
+      vertical-align: middle;
+    }
+
+    ::placeholder {
+      color: #eee;
+    }
+
+    input, select, textarea {
+      color: #fff;
+      background-color: rgba(255, 255, 255, 0.1);
+    }
+
+    input:focus, select:focus, textarea:focus {
+      background-color: rgba(255, 255, 255, 0.15);
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay"></div>
+  <div class="container-glass">
+    <h1><i class="bi bi-envelope-fill"></i> Kelola Surat</h1>
+
+    <div class="text-center mb-4">
+      <a href="admin.html" class="btn btn-secondary"><i class="bi bi-arrow-left"></i> Kembali ke Dashboard</a>
+    </div>
+
+    <div class="mb-4">
+      <h5>Tambah Surat Baru</h5>
+      <form id="surat-form" class="row g-3">
+        <div class="col-md-6">
+          <input type="text" id="nomor" class="form-control" placeholder="Nomor Surat" required />
+        </div>
+        <div class="col-md-3">
+          <select id="kategori" class="form-control" required>
+            <option value="">Pilih Kategori</option>
+            <option value="Undangan">Undangan</option>
+            <option value="Dinas Luar">Dinas Luar</option>
+            <option value="Dinas Kantor">Dinas Kantor</option>
+            <option value="Libur">Libur</option>
+            <option value="Cuti">Cuti</option>
+            <option value="Pengumuman">Pengumuman</option>
+            <option value="Peringatan">Peringatan</option>
+          </select>
+        </div>
+        <div class="col-md-3">
+          <input type="date" id="tanggal" class="form-control" required />
+        </div>
+        <div class="col-12">
+          <textarea id="isi" rows="3" class="form-control" placeholder="Isi Surat" required></textarea>
+        </div>
+        <div class="col-md-12 text-end">
+          <button type="submit" class="btn btn-primary"><i class="bi bi-plus-circle"></i> Tambah</button>
+        </div>
+      </form>
+    </div>
+
+    <table class="table table-bordered text-white text-center">
+      <thead>
+        <tr>
+          <th>Nomor</th>
+          <th>Kategori</th>
+          <th>Tanggal</th>
+          <th>Isi</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="surat-table">
+        <!-- Data surat akan ditampilkan di sini -->
+      </tbody>
+    </table>
+    <button class="btn btn-success mt-2" onclick="exportSuratExcel()">Unduh Excel</button>
+  </div>
+
+  <script>
+    const suratForm = document.getElementById('surat-form');
+    const suratTable = document.getElementById('surat-table');
+
+    suratForm.addEventListener('submit', async function (e) {
+      e.preventDefault();
+      const nomor = document.getElementById('nomor').value.trim();
+      const kategori = document.getElementById('kategori').value.trim();
+      const tanggal = document.getElementById('tanggal').value;
+      const isi = document.getElementById('isi').value.trim();
+      if (!nomor || !kategori || !tanggal || !isi) return;
+      const res = await fetch('surat_create.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `nomor=${encodeURIComponent(nomor)}&judul=${encodeURIComponent(nomor)}&kategori=${encodeURIComponent(kategori)}&tanggal=${encodeURIComponent(tanggal)}&isi=${encodeURIComponent(isi)}`
+      });
+      const data = await res.json();
+      if (data.success) {
+        alert('Surat berhasil ditambahkan!');
+        location.reload();
+      } else {
+        alert(data.message || 'Gagal menambah surat!');
+      }
+    });
+
+    async function loadSurat() {
+      const res = await fetch('surat_read.php');
+      const data = await res.json();
+      suratTable.innerHTML = '';
+      data.forEach(surat => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
+          <td>${surat.nomor}</td>
+          <td>${surat.kategori}</td>
+          <td>${surat.tanggal}</td>
+          <td>${surat.isi}</td>
+          <td>
+            <button class="btn btn-warning btn-sm" onclick="editSurat('${surat.id}')">Edit</button>
+            <button class="btn btn-danger btn-sm" onclick="hapusSurat('${surat.id}')">Hapus</button>
+          </td>
+        `;
+        suratTable.appendChild(tr);
+      });
+    }
+    loadSurat();
+
+    async function hapusSurat(id) {
+      if (!confirm('Yakin hapus surat ini?')) return;
+      const res = await fetch('surat_delete.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `id=${id}`
+      });
+      const data = await res.json();
+      if (data.success) loadSurat();
+      else alert('Gagal menghapus!');
+    }
+
+    function editSurat(id) {
+      const isiBaru = prompt('Edit isi surat:');
+      if (!isiBaru) return;
+      fetch('surat_edit.php', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body: `id=${id}&isi=${encodeURIComponent(isiBaru)}`
+      }).then(res => res.json()).then(data => {
+        if (data.success) loadSurat();
+        else alert('Gagal edit surat!');
+      });
+    }
+
+    function exportSuratExcel() {
+      window.location = 'surat_export_excel.php';
+    }
+  </script>
+</body>
+</html>
